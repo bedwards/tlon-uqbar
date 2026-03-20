@@ -8,7 +8,7 @@ from unittest.mock import patch
 import responses
 from click.testing import CliRunner
 
-from bandmix_cli.auth import get_status, login, logout
+from bandmix_cli.auth import PremierRequiredError, get_status, login, logout
 from bandmix_cli.client import AuthenticationError, BandMixClient
 from bandmix_cli.commands.auth import auth as auth_group
 
@@ -154,6 +154,17 @@ class TestGetStatus:
             assert False, "Expected AuthenticationError"  # noqa: B011
         except AuthenticationError:
             pass
+
+
+# ---------------------------------------------------------------------------
+# PremierRequiredError
+# ---------------------------------------------------------------------------
+
+
+class TestExceptions:
+    def test_premier_required_error(self) -> None:
+        exc = PremierRequiredError("Sending messages requires Premier membership.")
+        assert str(exc) == "Sending messages requires Premier membership."
 
 
 # ---------------------------------------------------------------------------
