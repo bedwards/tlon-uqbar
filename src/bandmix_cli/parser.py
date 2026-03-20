@@ -25,10 +25,12 @@ from bandmix_cli.enums import (
 from bandmix_cli.models import (
     AudioTrack,
     CalendarEvent,
+    DashboardSettings,
     EmailSettings,
     FeedEntry,
     InstrumentWithExperience,
     Match,
+    MatchMailerSettings,
     MemberProfile,
     Message,
     MessageThread,
@@ -862,3 +864,152 @@ def parse_settings_email(html: str) -> EmailSettings:
         ),
         format=_safe_enum(EmailFormat, _radio_val("format")),
     )
+
+
+# ---------------------------------------------------------------------------
+# Settings - Match Mailer
+# ---------------------------------------------------------------------------
+
+
+def parse_settings_matchmailer(html: str) -> MatchMailerSettings:
+    """Parse match mailer settings from /account/email/#matchmailer."""
+    soup = _soup(html)
+
+    def _input_val(name: str) -> str | None:
+        el = soup.select_one(f"input[name='{name}']")
+        if el is None:
+            return None
+        val = _attr(el, "value")
+        return val if val else None
+
+    def _checkbox_checked(name: str) -> bool:
+        el = soup.select_one(f"input[name='{name}']")
+        return el is not None and el.has_attr("checked")
+
+    def _select_val(name: str) -> str | None:
+        el = soup.select_one(f"select[name='{name}'] option[selected]")
+        return _text(el)
+
+    def _radio_val(name: str) -> str | None:
+        for radio in soup.select(f"input[name='{name}']"):
+            if radio.has_attr("checked"):
+                val = _attr(radio, "value")
+                return val if val else None
+        return None
+
+    radius_str = _input_val("radius") or _select_val("radius")
+    age_from_str = _input_val("age_from") or _select_val("age_from")
+    age_to_str = _input_val("age_to") or _select_val("age_to")
+
+    return MatchMailerSettings(
+        enabled=_checkbox_checked("enabled"),
+        radius=int(radius_str) if radius_str and radius_str.isdigit() else None,
+        age_from=int(age_from_str) if age_from_str and age_from_str.isdigit() else None,
+        age_to=int(age_to_str) if age_to_str and age_to_str.isdigit() else None,
+        filter_instrument=_checkbox_checked("filter_instrument"),
+        filter_genre=_checkbox_checked("filter_genre"),
+        recommendations=_safe_enum(EnabledDisabled, _radio_val("recommendations")),
+        additional_local=_safe_enum(EnabledDisabled, _radio_val("additional_local")),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Settings - Dashboard
+# ---------------------------------------------------------------------------
+
+
+def parse_settings_dashboard(html: str) -> DashboardSettings:
+    """Parse dashboard options from /account/dashboard-options/."""
+    soup = _soup(html)
+
+    def _input_val(name: str) -> str | None:
+        el = soup.select_one(f"input[name='{name}']")
+        if el is None:
+            return None
+        val = _attr(el, "value")
+        return val if val else None
+
+    def _checkbox_checked(name: str) -> bool:
+        el = soup.select_one(f"input[name='{name}']")
+        return el is not None and el.has_attr("checked")
+
+    def _select_val(name: str) -> str | None:
+        el = soup.select_one(f"select[name='{name}'] option[selected]")
+        return _text(el)
+
+    radius_str = _input_val("radius") or _select_val("radius")
+    age_from_str = _input_val("age_from") or _select_val("age_from")
+    age_to_str = _input_val("age_to") or _select_val("age_to")
+
+    return DashboardSettings(
+        show_matches=_checkbox_checked("show_matches"),
+        radius=int(radius_str) if radius_str and radius_str.isdigit() else None,
+        age_from=int(age_from_str) if age_from_str and age_from_str.isdigit() else None,
+        age_to=int(age_to_str) if age_to_str and age_to_str.isdigit() else None,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Music List (Bookmarks)
+# ---------------------------------------------------------------------------
+
+
+def parse_musiclist(html: str) -> list[SearchResult]:
+    """Parse bookmarked profiles from /account/bookmarks/."""
+    soup = _soup(html)
+    results: list[SearchResult] = []
+
+    for card in soup.select(
+        ".bookmark-item, .musiclist-item, .search-result, .result-card"
+    ):
+        name_el = card.select_one(".screen-name, .result-name, h3 a, a")
+        slug = ""
+        if name_el:
+            href = _attr(name_el, "href")
+            if href:
+                slug = href.strip("/").split("/")[-1]
+
+        location_el = card.select_one(".location, .result-location")
+        snippet_el = card.select_one(".snippet, .description-preview")
+
+        results.append(
+            SearchResult(
+                screen_name=_text(name_el) or "",
+                slug=slug,
+                location=_text(location_el),
+                snippet=_text(snippet_el),
+            )
+        )
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Hidden Users
+# ---------------------------------------------------------------------------
+
+
+def parse_hidden(html: str) -> list[SearchResult]:
+    """Parse hidden users from /account/hidden/."""
+    soup = _soup(html)
+    results: list[SearchResult] = []
+
+    for card in soup.select(".hidden-item, .hidden-user, .search-result, .result-card"):
+        name_el = card.select_one(".screen-name, .result-name, h3 a, a")
+        slug = ""
+        if name_el:
+            href = _attr(name_el, "href")
+            if href:
+                slug = href.strip("/").split("/")[-1]
+
+        location_el = card.select_one(".location, .result-location")
+
+        results.append(
+            SearchResult(
+                screen_name=_text(name_el) or "",
+                slug=slug,
+                location=_text(location_el),
+            )
+        )
+
+    return results
