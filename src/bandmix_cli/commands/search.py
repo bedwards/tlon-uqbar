@@ -331,7 +331,7 @@ def search(  # noqa: PLR0913
             click.echo(format_output(resp.text, "raw"))
             return
 
-        page_results = parse_search_results(resp.text)
+        page_results, _total_pages = parse_search_results(resp.text)
         all_results.extend(page_results)
 
         # If limit is set and we have enough, truncate and stop

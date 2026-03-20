@@ -19,12 +19,12 @@ SAMPLE_SEARCH_HTML = """\
 <html>
 <body>
 <div class="search-result">
-  <a href="/jim-stone-123/">Jim Stone</a>
+  <h3><a href="/jim-stone-123/">Jim Stone</a></h3>
   <span class="location">Austin, TX</span>
   <span class="zip">78701</span>
   <span class="category">Musicians</span>
   <span class="instruments">Acoustic Guitar, Vocalist</span>
-  <span class="genre">Country, Folk</span>
+  <span class="genres">Country, Folk</span>
   <span class="seeking">Seeking</span>
   <span class="last-active">2 days ago</span>
   <span class="has-image">img</span>
@@ -32,10 +32,10 @@ SAMPLE_SEARCH_HTML = """\
   <span class="snippet">Singer-songwriter from Austin</span>
 </div>
 <div class="search-result">
-  <a href="/jane-doe-456/">Jane Doe</a>
+  <h3><a href="/jane-doe-456/">Jane Doe</a></h3>
   <span class="location">Nashville, TN</span>
   <span class="instruments">Piano, Keyboard</span>
-  <span class="genre">Jazz, Blues</span>
+  <span class="genres">Jazz, Blues</span>
   <span class="last-active">1 week ago</span>
   <span class="has-video">video</span>
   <span class="snippet">Jazz pianist</span>
@@ -60,11 +60,11 @@ EMPTY_SEARCH_HTML = """\
 
 class TestParseSearchResults:
     def test_parses_multiple_results(self):
-        results = parse_search_results(SAMPLE_SEARCH_HTML)
+        results, _ = parse_search_results(SAMPLE_SEARCH_HTML)
         assert len(results) == 2
 
     def test_first_result_fields(self):
-        results = parse_search_results(SAMPLE_SEARCH_HTML)
+        results, _ = parse_search_results(SAMPLE_SEARCH_HTML)
         r = results[0]
         assert isinstance(r, SearchResult)
         assert r.screen_name == "Jim Stone"
@@ -79,21 +79,21 @@ class TestParseSearchResults:
         assert r.snippet == "Singer-songwriter from Austin"
 
     def test_first_result_instruments(self):
-        results = parse_search_results(SAMPLE_SEARCH_HTML)
+        results, _ = parse_search_results(SAMPLE_SEARCH_HTML)
         r = results[0]
         instrument_values = [i.value for i in r.instruments]
         assert "Acoustic Guitar" in instrument_values
         assert "Vocalist" in instrument_values
 
     def test_first_result_genres(self):
-        results = parse_search_results(SAMPLE_SEARCH_HTML)
+        results, _ = parse_search_results(SAMPLE_SEARCH_HTML)
         r = results[0]
         genre_values = [g.value for g in r.genres]
         assert "Country" in genre_values
         assert "Folk" in genre_values
 
     def test_second_result_fields(self):
-        results = parse_search_results(SAMPLE_SEARCH_HTML)
+        results, _ = parse_search_results(SAMPLE_SEARCH_HTML)
         r = results[1]
         assert r.screen_name == "Jane Doe"
         assert r.slug == "jane-doe-456"
@@ -103,11 +103,11 @@ class TestParseSearchResults:
         assert r.has_image is False
 
     def test_empty_results(self):
-        results = parse_search_results(EMPTY_SEARCH_HTML)
+        results, _ = parse_search_results(EMPTY_SEARCH_HTML)
         assert results == []
 
     def test_empty_html(self):
-        results = parse_search_results("")
+        results, _ = parse_search_results("")
         assert results == []
 
 
