@@ -6,7 +6,6 @@ from bandmix_cli import __version__
 from bandmix_cli.commands.auth import auth
 from bandmix_cli.commands.member import member
 from bandmix_cli.commands.messages import messages
-from bandmix_cli.commands.profile import profile
 from bandmix_cli.commands.search import search
 
 
@@ -19,7 +18,6 @@ def cli():
 cli.add_command(auth)
 cli.add_command(member)
 cli.add_command(messages)
-cli.add_command(profile)
 cli.add_command(search)
 
 
