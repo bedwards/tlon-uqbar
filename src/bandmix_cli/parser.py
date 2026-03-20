@@ -19,6 +19,7 @@ from bandmix_cli.enums import (
     GigsPlayed,
     Instrument,
     PracticeFrequency,
+    ProfileType,
     SearchCategory,
     YearsPlaying,
 )
@@ -256,6 +257,7 @@ def parse_profile(html: str) -> Profile:
         ),
         gig_availability=_safe_enum(GigFrequency, _select_val("gig_availability")),
         most_available=_safe_enum(Availability, _select_val("most_available")),
+        profile_type=_safe_enum(ProfileType, _select_val("profile_type")),
     )
 
 
