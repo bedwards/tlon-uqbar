@@ -12,7 +12,7 @@ from bandmix_cli.enums import (
     EnabledDisabled,
     ExperienceLevel,
     Genre,
-    GigNightsPerWeek,
+    GigFrequency,
     GigsPlayed,
     Instrument,
     PracticeFrequency,
@@ -53,7 +53,7 @@ class Profile(BaseModel):
     equipment: str | None = None
     gigs_played: GigsPlayed | None = None
     practice_frequency: PracticeFrequency | None = None
-    gig_availability: GigNightsPerWeek | None = None
+    gig_availability: GigFrequency | None = None
     most_available: Availability | None = None
     profile_type: ProfileType | None = None
 
@@ -87,7 +87,7 @@ class MemberProfile(BaseModel):
     years_playing: YearsPlaying | None = None
     gigs_played: GigsPlayed | None = None
     practice_frequency: PracticeFrequency | None = None
-    gig_availability: GigNightsPerWeek | None = None
+    gig_availability: GigFrequency | None = None
     most_available: Availability | None = None
     instruments: list[InstrumentWithExperience] = Field(default_factory=list)
     genres: list[Genre] = Field(default_factory=list)

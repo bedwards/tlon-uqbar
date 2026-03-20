@@ -1,10 +1,10 @@
-"""Enumerations for BandMix data entities."""
+"""Enumerations for BandMix.com data values."""
 
 from enum import StrEnum
 
 
 class Instrument(StrEnum):
-    """Musical instruments recognized by BandMix."""
+    """Musical instruments recognized by BandMix (36 values)."""
 
     ACCORDION = "Accordion"
     ACOUSTIC_GUITAR = "Acoustic Guitar"
@@ -45,7 +45,7 @@ class Instrument(StrEnum):
 
 
 class Genre(StrEnum):
-    """Music genres recognized by BandMix."""
+    """Music genres recognized by BandMix (33 values, max 4 selectable)."""
 
     ACOUSTIC = "Acoustic"
     ALTERNATIVE = "Alternative"
@@ -82,7 +82,7 @@ class Genre(StrEnum):
 
 
 class CommitmentLevel(StrEnum):
-    """Commitment levels for musicians."""
+    """Commitment levels for musicians and bands."""
 
     JUST_FOR_FUN = "Just for Fun"
     MODERATELY_COMMITTED = "Moderately Committed"
@@ -135,22 +135,22 @@ class GigsPlayed(StrEnum):
 
     UNSPECIFIED = "Unspecified"
     UNDER_10 = "Under 10"
-    TEN_TO_50 = "10 to 50"
-    FIFTY_TO_100 = "50 to 100"
+    FROM_10_TO_50 = "10 to 50"
+    FROM_50_TO_100 = "50 to 100"
     OVER_100 = "Over 100"
 
 
 class PracticeFrequency(StrEnum):
-    """How often a musician practices."""
+    """How often one practices."""
 
     UNSPECIFIED = "Unspecified"
     ONCE_PER_WEEK = "1 time per week"
     TWO_THREE_PER_WEEK = "2-3 times per week"
-    MORE_THAN_THREE = "More than 3 times per week"
+    MORE_THAN_THREE_PER_WEEK = "More than 3 times per week"
 
 
-class GigNightsPerWeek(StrEnum):
-    """Gig availability in nights per week."""
+class GigFrequency(StrEnum):
+    """Desired number of gig nights per week."""
 
     UNSPECIFIED = "Unspecified"
     ONE_NIGHT = "1 night a week"
@@ -173,12 +173,6 @@ class SearchCategory(StrEnum):
 
     MUSICIANS = "Musicians"
     BANDS = "Bands"
-    INDUSTRY_LISTINGS = "Industry Listings"
-
-
-class IndustrySubcategory(StrEnum):
-    """Subcategories for industry listings."""
-
     SONGWRITERS = "Songwriters"
     PHOTOGRAPHERS = "Photographers"
     VENUES = "Venues"
@@ -190,6 +184,80 @@ class IndustrySubcategory(StrEnum):
     SOUND_ENGINEERS = "Sound engineers"
     MUSIC_TEACHERS = "Music teachers"
     REHEARSAL_SPACE = "Rehearsal space"
+
+
+class USState(StrEnum):
+    """US states, territories, and armed forces regions."""
+
+    # 50 states
+    AL = "Alabama"
+    AK = "Alaska"
+    AZ = "Arizona"
+    AR = "Arkansas"
+    CA = "California"
+    CO = "Colorado"
+    CT = "Connecticut"
+    DE = "Delaware"
+    FL = "Florida"
+    GA = "Georgia"
+    HI = "Hawaii"
+    ID = "Idaho"
+    IL = "Illinois"
+    IN = "Indiana"
+    IA = "Iowa"
+    KS = "Kansas"
+    KY = "Kentucky"
+    LA = "Louisiana"
+    ME = "Maine"
+    MD = "Maryland"
+    MA = "Massachusetts"
+    MI = "Michigan"
+    MN = "Minnesota"
+    MS = "Mississippi"
+    MO = "Missouri"
+    MT = "Montana"
+    NE = "Nebraska"
+    NV = "Nevada"
+    NH = "New Hampshire"
+    NJ = "New Jersey"
+    NM = "New Mexico"
+    NY = "New York"
+    NC = "North Carolina"
+    ND = "North Dakota"
+    OH = "Ohio"
+    OK = "Oklahoma"
+    OR = "Oregon"
+    PA = "Pennsylvania"
+    RI = "Rhode Island"
+    SC = "South Carolina"
+    SD = "South Dakota"
+    TN = "Tennessee"
+    TX = "Texas"
+    UT = "Utah"
+    VT = "Vermont"
+    VA = "Virginia"
+    WA = "Washington"
+    WV = "West Virginia"
+    WI = "Wisconsin"
+    WY = "Wyoming"
+    # District of Columbia
+    DC = "District of Columbia"
+    # Territories
+    AS = "American Samoa"
+    GU = "Guam"
+    MH = "Marshall Islands"
+    FM = "Federated States of Micronesia"
+    MP = "Northern Mariana Islands"
+    PW = "Palau"
+    PR = "Puerto Rico"
+    VI = "US Virgin Islands"
+    # Armed Forces
+    AA = "Armed Forces Americas"
+    AE = "Armed Forces Europe"
+    AP = "Armed Forces Pacific"
+
+
+# Additional enums for search, profile, and settings
 
 
 class Gender(StrEnum):
@@ -284,72 +352,3 @@ class OutputFormat(StrEnum):
     JSON = "json"
     TEXT = "text"
     TABLE = "table"
-
-
-class USState(StrEnum):
-    """US states, territories, and armed forces regions."""
-
-    AL = "AL"
-    AK = "AK"
-    AZ = "AZ"
-    AR = "AR"
-    CA = "CA"
-    CO = "CO"
-    CT = "CT"
-    DE = "DE"
-    FL = "FL"
-    GA = "GA"
-    HI = "HI"
-    ID = "ID"
-    IL = "IL"
-    IN = "IN"
-    IA = "IA"
-    KS = "KS"
-    KY = "KY"
-    LA = "LA"
-    ME = "ME"
-    MD = "MD"
-    MA = "MA"
-    MI = "MI"
-    MN = "MN"
-    MS = "MS"
-    MO = "MO"
-    MT = "MT"
-    NE = "NE"
-    NV = "NV"
-    NH = "NH"
-    NJ = "NJ"
-    NM = "NM"
-    NY = "NY"
-    NC = "NC"
-    ND = "ND"
-    OH = "OH"
-    OK = "OK"
-    OR = "OR"
-    PA = "PA"
-    RI = "RI"
-    SC = "SC"
-    SD = "SD"
-    TN = "TN"
-    TX = "TX"
-    UT = "UT"
-    VT = "VT"
-    VA = "VA"
-    WA = "WA"
-    WV = "WV"
-    WI = "WI"
-    WY = "WY"
-    DC = "DC"
-    # Territories
-    AS = "AS"
-    GU = "GU"
-    MH = "MH"
-    FM = "FM"
-    MP = "MP"
-    PW = "PW"
-    PR = "PR"
-    VI = "VI"
-    # Armed Forces
-    AA = "AA"  # Armed Forces Americas
-    AE = "AE"  # Armed Forces Europe
-    AP = "AP"  # Armed Forces Pacific

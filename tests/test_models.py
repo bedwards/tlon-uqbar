@@ -13,7 +13,7 @@ from bandmix_cli.enums import (
     EnabledDisabled,
     ExperienceLevel,
     Genre,
-    GigNightsPerWeek,
+    GigFrequency,
     GigsPlayed,
     Instrument,
     PracticeFrequency,
@@ -119,7 +119,7 @@ class TestProfile:
             equipment="Taylor 814ce",
             gigs_played=GigsPlayed.OVER_100,
             practice_frequency=PracticeFrequency.TWO_THREE_PER_WEEK,
-            gig_availability=GigNightsPerWeek.TWO_THREE_NIGHTS,
+            gig_availability=GigFrequency.TWO_THREE_NIGHTS,
             most_available=Availability.NIGHTS,
             profile_type=ProfileType.MUSICIAN,
         )
