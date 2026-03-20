@@ -255,3 +255,100 @@ class USState(StrEnum):
     AA = "Armed Forces Americas"
     AE = "Armed Forces Europe"
     AP = "Armed Forces Pacific"
+
+
+# Additional enums for search, profile, and settings
+
+
+class Gender(StrEnum):
+    """Gender options."""
+
+    ANY = "any"
+    MALE = "male"
+    FEMALE = "female"
+
+
+class SearchSort(StrEnum):
+    """Search result sort options."""
+
+    LOCATION = "location"
+    ACTIVITY = "activity"
+    DATE = "date"
+
+
+class SearchRadius(StrEnum):
+    """Search radius in miles."""
+
+    R10 = "10"
+    R25 = "25"
+    R50 = "50"
+    R100 = "100"
+    R250 = "250"
+
+
+class ActiveWithin(StrEnum):
+    """Recency filter for search."""
+
+    ONE_WEEK = "1w"
+    TWO_WEEKS = "2w"
+    THREE_WEEKS = "3w"
+    FOUR_WEEKS = "4w"
+    FIVE_WEEKS = "5w"
+    SIX_WEEKS = "6w"
+
+
+class ProfileType(StrEnum):
+    """Account profile type."""
+
+    MUSICIAN = "Musician"
+    BAND = "Band"
+
+
+class MatchType(StrEnum):
+    """Match listing types."""
+
+    NEW_MATCHES = "1"
+    NEW_LOCAL_MEMBERS = "2"
+
+
+class FeedFilter(StrEnum):
+    """Activity feed filter options."""
+
+    ALL = "all"
+    LOCAL = "local"
+    MUSIC_LIST = "music-list"
+    MY_FEEDS = "my-feeds"
+
+
+class ActionType(StrEnum):
+    """Activity feed action types."""
+
+    JOINED = "joined"
+    UPLOADED_IMAGES = "uploaded_images"
+    UPLOADED_MUSIC = "uploaded_music"
+    ADDED_VIDEOS = "added_videos"
+    UPDATED_INSTRUMENTS = "updated_instruments"
+    UPDATED_SEEKING = "updated_seeking"
+    CHANGED_PICTURE = "changed_picture"
+
+
+class EmailFormat(StrEnum):
+    """Email format preference."""
+
+    HTML = "html"
+    PLAINTEXT = "plaintext"
+
+
+class EnabledDisabled(StrEnum):
+    """Generic enabled/disabled toggle."""
+
+    ENABLED = "enabled"
+    DISABLED = "disabled"
+
+
+class OutputFormat(StrEnum):
+    """CLI output format options."""
+
+    JSON = "json"
+    TEXT = "text"
+    TABLE = "table"
