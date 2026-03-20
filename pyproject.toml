@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
 
+[project.scripts]
+tlon = "tlon_uqbar.__main__:main"
+
 [dependency-groups]
 dev = [
     "tlon_uqbar",
